@@ -38,4 +38,4 @@ They require email as json input
 
 ## Deployed Link
 
-<a href="https://meme-x-app.herokuapp.com/">Xmeme Application</a>
+<a href="https://register-login-forgot-usr-pass.herokuapp.com/">Test API</a>
