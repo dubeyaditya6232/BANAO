@@ -16,7 +16,7 @@ router.post('/register', async (req, res) => {
       res.json(err);
     } else {
       if (found) {
-        res.statusCode = 40
+        res.statusCode = 409
         res.json({ success: false, message: "username already taken" });
       } else {
         User.findOne({ email: req.body.email }, (err, found) => {
@@ -71,8 +71,7 @@ router.post('/register', async (req, res) => {
                         user: {}
                       };
                       showUser.user = user;
-                      res.statusCode = 200;
-                      res.json(showUser);
+                      res.status(200).json(showUser);
                     }
                   });
                 }
