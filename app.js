@@ -7,14 +7,15 @@ var logger = require('morgan');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+var postRouter = require('./routes/postRouter');
 var mongoose = require('mongoose');
 var app = express();
 
 //connectiong to db
 mongoose.set('useUnifiedTopology', true);
 mongoose.set('useNewUrlParser', true);
-//const connect=mongoose.connect(config.MONGODB_URL);
-const connect=mongoose.connect(process.env.MONGODB_URI);
+const connect=mongoose.connect(process.env.MONGODB_URL);
+//const connect=mongoose.connect(process.env.MONGODB_URI);
 connect.then(()=>{
   console.log("connected to db");
 },(err)=>{console.log(err);});
@@ -31,6 +32,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/api/v1',usersRouter)
+app.use('/api/v1/tweet',postRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

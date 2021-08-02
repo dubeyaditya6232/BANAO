@@ -35,12 +35,12 @@ router.post('/register', async (req, res) => {
               var username = req.body.username;
               username = username.trim();
               if (username == "") {
-                res.statusCode = 209;
+                res.statusCode = 400;
                 res.json({ success: false, message: "Username must not be empty" })
               }
               password = password.trim();
               if (password === "") {
-                res.statusCode = 209;
+                res.statusCode = 400;
                 res.json({ success: false, message: "Password must not be empty" })
               }
               if (password.length < 6) {
@@ -83,7 +83,6 @@ router.post('/register', async (req, res) => {
     }
   });
 });
-
 router.post('/login', (req, res) => {
   var username = req.body.username;
   var password = req.body.password;
@@ -95,7 +94,7 @@ router.post('/login', (req, res) => {
             console.log(err);
           }
           if (result) {
-            token = jwt.sign({ username: username }, process.env.secretKey);
+            token = jwt.sign({ username: username }, process.env.secretKey,{expiresIn:3600});
             res.status(200).json({ success: true, status: "Logged in successfully", token });
           } else {
             res.status(403).json({ success: false, message: 'Incorrect userrname or password' });
@@ -190,7 +189,7 @@ router.post('/passwordReset/:verifytoken', (req, res) => {
         var confirmPassword = req.body.confirmpassword;
         password = password.trim();
         if (password === "") {
-          res.statusCode = 209;
+          res.statusCode = 400;
           res.json({ success: false, message: "Password must not be empty" });
         }
         else if (password.length < 6) {
